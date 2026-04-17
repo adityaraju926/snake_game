@@ -99,21 +99,3 @@ class NonDLAgent:
             return candidate_action
         
         return ACTIONS[0] # End game if every direction is a dead end
-
-
-if __name__ == '__main__':
-    from snake.game import SnakeGame
-
-    game = SnakeGame(width=20, height=20, seed=0)
-    agent = NonDLAgent()
-
-    step_count = 0
-    max_steps = 5000  # Safety cap
-
-    while not game.done and step_count < max_steps: # Run until game over or step cap reached
-        action = agent.get_action(game)
-        game.step(action)
-        step_count += 1
-
-    print(f'Final score: {game.score}')
-    print(f'Steps taken: {step_count}')
