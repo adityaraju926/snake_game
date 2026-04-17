@@ -17,9 +17,9 @@ class SnakeGame:
       2 = food cell
     '''
 
-    def __init__(self, width=10, height=10, seed=None):
-        self.width = width
-        self.height = height
+    def __init__(self, seed=None):
+        self.width = 15
+        self.height = 15
         self.random = random.Random(seed)
         self.reset()
 
