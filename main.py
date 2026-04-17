@@ -7,7 +7,7 @@ from non_dl_approach import NonDLAgent
 CELL_SIZE = 40  # Pixels per grid cell
 COLORS = {
     'empty': "#113246",
-    'snake_head': '#2ecc71',
+    'snake_head': '#1a9c54',
     'snake_body': '#27ae60',
     'food': '#ff4444',
     'grid_line': "#0C232E"}
