@@ -1,1 +1,73 @@
-# snake_game
+# Snake Game Agent
+
+## Motivation and Task Context
+
+We wanted to build an agent for a task that's visual and easy to understand but still has real decision-making involved. Snake felt like a good fit because the rules are simple (move around, eat food, don't crash), but the agent has to deal with a growing body and changing environment that makes the board harder to navigate over time.
+
+## Architecture
+
+### Game Environment
+
+The game runs on a 15x15 grid, as defined by the environment in `snake/game.py`.
+
+- `reset()` starts a fresh game and gives back the board
+- `step(action)` takes a move and returns the updated board, a reward, and whether the game ended
+
+The board is a numpy array where 0 means empty, 1 means snake, and 2 means food. The agent gets +10 for eating food, -10 for dying, either by hitting a wall or itself.
+
+### Non-DL Agent
+
+Located in `non_dl_approach.py`.
+
+- **Perception**: Looks at the game state to find where the head is, where the body segments are, and where the food is.
+- **Planning**: Uses breadth-first search to find the shortest path from the head to the food, avoiding any cells that the snake's body is currently on.
+- **Control**: Moves one step along that path. If no path to the food exists, like if the body is blocking every route, it just picks any move that won't kill it immediately.
+
+**Why this approach?** Every move costs the same (one step), so BFS always gives the shortest path. There is no need for a complex priotiry queue or heuristics in this scenario. The main downside is that it doesn't think ahead about where the body will be in future steps, so it can accidentally trap itself once the snake gets too long.
+
+### DL Agent
+
+Located in `dl_approach.py`.
+
+- **Perception**:
+- **Planning**:
+- **Control**:
+
+**Why this approach?**
+
+## Evaluation Approach and Results
+
+We evaluate both agents on the same game environment using the shared `agent.get_action(game)` interface. Each agent plays 100 games to get enough data to get stable averages and see how consistent each agent is.
+
+The metrics we track are:
+
+- Average score (how much food the agent eats per game)
+- Average game length (how many steps it survives)
+- Score standard deviation (how much the score varies from game to game, lower means more consistent)
+
+### Results
+
+| Metric        | Non-DL       | DL Agent |
+| ------------- | ------------ | -------- |
+| Avg Score     | ...          | ...      |
+| Avg Steps     | ...          | ...      |
+| Score Std Dev | ...          | ...      |
+
+## Running the Agent
+
+### Setup
+
+Install requirements:
+```
+pip install -r requirements.txt
+```
+
+Launch the UI:
+
+```
+streamlit run main.py
+```
+
+This opens a Streamlit app where you can pick an agent, adjust the speed, and watch it play. The sidebar has start/pause/reset buttons and shows live stats.
+
+## Lessons Learned
