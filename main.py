@@ -12,8 +12,8 @@ COLORS = {
     'food': '#ff4444',
     'grid_line': "#0C232E"}
 AGENTS = {
-    'Non-DL': NonDLAgent,
-    # 'DL Agent': DLAgent
+    'BFS Search Agent': NonDLAgent,
+    # 'Deep Learning Agent': DLAgent
 }
 
 def create_board(game):
