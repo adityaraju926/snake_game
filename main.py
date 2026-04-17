@@ -98,23 +98,23 @@ def main():
         st.metric('High Score', st.session_state.high_score)
         st.metric('Games Played', st.session_state.games_played)
 
+    # Game board
     board_placeholder = st.empty()
-    board_placeholder.markdown(create_board(game), unsafe_allow_html=True) # Create the game board
+    board_placeholder.markdown(create_board(game), unsafe_allow_html=True)
 
-    if st.session_state.running and not game.done: #Loop game until paused or game over
+    # Game loop: swaps the board in place so the page never re-renders
+    while st.session_state.running and not game.done:
         action = agent.get_action(game)
         game.step(action)
 
         if game.score > st.session_state.high_score:
             st.session_state.high_score = game.score
 
-        if game.done:
-            st.session_state.running = False
-
+        board_placeholder.markdown(create_board(game), unsafe_allow_html=True)
         time.sleep(1.0 / st.session_state.speed)
-        st.rerun()
 
     if game.done:
+        st.session_state.running = False
         st.warning(f'Game over! Final score: {game.score}')
 
 if __name__ == '__main__':
