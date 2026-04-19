@@ -23,17 +23,17 @@ Located in `non_dl_approach.py`.
 - **Planning**: Uses breadth-first search to find the shortest path from the head to the food, avoiding any cells that the snake's body is currently on.
 - **Control**: Moves one step along that path. If no path to the food exists, like if the body is blocking every route, it just picks any move that won't kill it immediately.
 
-**Why this approach?** Every move costs the same (one step), so BFS always gives the shortest path. There is no need for a complex priotiry queue or heuristics in this scenario. The main downside is that it doesn't think ahead about where the body will be in future steps, so it can accidentally trap itself once the snake gets too long.
+**Why this approach?**: Every move costs the same (one step), so BFS always gives the shortest path. There is no need for a complex priotiry queue or heuristics in this scenario. The main downside is that it doesn't think ahead about where the body will be in future steps, so it can accidentally trap itself once the snake gets too long.
 
 ### Deep Learning Agent
 
 Located in `dl_approach.py`.
 
-- **Perception**:
-- **Planning**:
-- **Control**:
+- **Perception**: Extracts 11 features from the board. Checks whether the cell ahead, to the right, or to the left of the head is dangerous (wall or snake body)
+- **Planning**: Uses a Deep Q-Network (DQN) trained via reinforcement learning. The network maps the 11 features to Q-values for each of the possible actions. During training, the agent uses epsilon-greedy exploration and learns from a replay buffer of past experiences, using a separate target network
+- **Control**: Takes the action with the highest Q-value output by the network
 
-**Why this approach?**
+**Why this approach?**: DQN fits for snake because the agent can learn from trial and error. The 11-feature vector keeps training fast while still capturing the spatial information the agent needs. The tradeoff is unlike BFS, the DL agent doesn't plan multiple steps ahead, so it can make locally reasonable moves
 
 ## Evaluation Approach and Results
 
@@ -46,12 +46,9 @@ The metrics tracked are:
 - Score standard deviation (how much the score varies from game to game, lower means more consistent)
 
 ### Results
+The BFS agent performed significantly better than the Deep Learning agent. This is expected as BFS finds the optimal path while the DL agent learned heuristics from a limited 1000 episode training run. The DL agent is more consistent (lower Std Dev) but plays shorter, less productive games. This can be improved with more training episodes.
 
-| Metric        | Non-DL       | DL Agent |
-| ------------- | ------------ | -------- |
-| Avg Score     |              |          |
-| Avg Steps     |              |          |
-| Score Std Dev |              |          |
+![Results](results.png)
 
 ## Running the Agent
 
@@ -69,5 +66,3 @@ streamlit run main.py
 ```
 
 This opens a Streamlit app where you can pick an agent, adjust the speed, and watch it play. The sidebar has start/pause/reset buttons and shows live stats.
-
-## Lessons Learned

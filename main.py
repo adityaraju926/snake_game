@@ -2,7 +2,7 @@ import time
 import streamlit as st
 from snake.game import SnakeGame
 from non_dl_approach import NonDLAgent
-# from dl_approach import DLAgent
+from dl_approach import DLAgent
 
 CELL_SIZE = 40  # Pixels per grid cell
 COLORS = {
@@ -13,7 +13,7 @@ COLORS = {
     'grid_line': "#0C232E"}
 AGENTS = {
     'BFS Search Agent': NonDLAgent,
-    # 'Deep Learning Agent': DLAgent
+    'Deep Learning Agent': DLAgent,
 }
 
 def create_board(game):
@@ -93,10 +93,18 @@ def main():
 
         # Stats
         st.header('Stats')
-        st.metric('Score', game.score)
-        st.metric('Snake Length', len(game.snake))
-        st.metric('High Score', st.session_state.high_score)
-        st.metric('Games Played', st.session_state.games_played)
+        score_placeholder = st.empty()
+        length_placeholder = st.empty()
+        high_score_placeholder = st.empty()
+        games_placeholder = st.empty()
+
+    def update_stats():
+        score_placeholder.metric('Score', game.score)
+        length_placeholder.metric('Snake Length', len(game.snake))
+        high_score_placeholder.metric('High Score', st.session_state.high_score)
+        games_placeholder.metric('Games Played', st.session_state.games_played)
+
+    update_stats()
 
     # Game board
     board_placeholder = st.empty()
@@ -111,6 +119,7 @@ def main():
             st.session_state.high_score = game.score
 
         board_placeholder.markdown(create_board(game), unsafe_allow_html=True)
+        update_stats()
         time.sleep(1.0 / st.session_state.speed)
 
     if game.done:
