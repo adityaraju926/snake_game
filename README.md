@@ -13,7 +13,7 @@ The game runs on a 15x15 grid, as defined by the environment in `snake/game.py`.
 - `reset()` starts a fresh game and gives back the board
 - `step(action)` takes a move and returns the updated board, a reward, and whether the game ended
 
-The board is a numpy array where 0 means empty, 1 means snake, and 2 means food. The agent gets +10 for eating food, -10 for dying, either by hitting a wall or itself.
+The board is a numpy array where 0 means empty, 1 means snake, and 2 means food. The agent gets +1 for eating food, -10 for dying, either by hitting a wall or itself.
 
 ### Non-Deep Learning Agent
 
