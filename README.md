@@ -23,7 +23,7 @@ Located in `non_dl_approach.py`.
 - **Planning**: Uses breadth-first search to find the shortest path from the head to the food, avoiding any cells that the snake's body is currently on.
 - **Control**: Moves one step along that path. If no path to the food exists, like if the body is blocking every route, it just picks any move that won't kill it immediately.
 
-**Why this approach?**: Every move costs the same (one step), so BFS always gives the shortest path. There is no need for a complex priotiry queue or heuristics in this scenario. The main downside is that it doesn't think ahead about where the body will be in future steps, so it can accidentally trap itself once the snake gets too long.
+**Why this approach?**: Every move costs the same (one step), so BFS always gives the shortest path. There is no need for a complex priority queue or heuristics in this scenario. The main downside is that it doesn't think ahead about where the body will be in future steps, so it can accidentally trap itself once the snake gets too long.
 
 ### Deep Learning Agent
 
@@ -33,7 +33,7 @@ Located in `dl_approach.py`.
 - **Planning**: Uses a Deep Q-Network (DQN) trained via reinforcement learning. The network maps the 11 features to Q-values for each of the possible actions. During training, the agent uses epsilon-greedy exploration and learns from a replay buffer of past experiences, using a separate target network
 - **Control**: Takes the action with the highest Q-value output by the network
 
-**Why this approach?**: DQN fits for snake because the agent can learn from trial and error. The 11-feature vector keeps training fast while still capturing the spatial information the agent needs. The tradeoff is unlike BFS, the DL agent doesn't plan multiple steps ahead, so it can make locally reasonable moves
+**Why this approach?**: DQN fits for snake because the agent can learn from trial and error. The 11-feature vector keeps training fast while still capturing the spatial information the agent needs. The tradeoff is that during training, most of the board information is discarded and the agent sees immediate direction and food direction, not the full layout. Unlike BFS, it has no guarantee of reaching the food.
 
 ## Evaluation Approach and Results
 
